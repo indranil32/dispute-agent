@@ -1,0 +1,16 @@
+{
+  "message_id": "msg-01-valid-overcharge",
+  "conversation_id": "conv-001",
+  "sender": "accounts@gulfstarshipping.ae",
+  "subject": "Dispute - invoice INV-2026-104233 overcharge",
+  "body": "Dear AD Ports Finance,\n\nWe dispute invoice INV-2026-104233. Our UCID is UC100245.\nThe storage charges were billed at the wrong tariff: we were overcharged by AED 6,400.00 (14 days billed instead of 7).\n\nDisputed amount: AED 6,400.00\nReason: overcharge on storage days.\n\nRegards,\nAccounts team\nGulf Star Shipping LLC",
+  "received_at": "2026-10-05T08:10:00+04:00",
+  "attachments": [
+    {
+      "name": "storage-log.txt",
+      "content_type": "text/plain",
+      "size": 220,
+      "text": "Container MSKU 1234567 gate-in 02-Sep-2026, gate-out 09-Sep-2026: 7 storage days."
+    }
+  ]
+}

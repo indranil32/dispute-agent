@@ -1,0 +1,15 @@
+Subject: RE: $subject - dispute registered ($dispute_ref)
+
+Dear Customer,
+
+Your dispute has been registered.
+
+  Dispute reference: $dispute_ref
+  Invoice number:    $invoice_number
+  Disputed amount:   $amount $currency
+
+The Finance team will review it and we will email you with the outcome. Please quote the dispute reference in any correspondence.
+
+Kind regards,
+AD Ports Finance - Disputes
+Dispute.Ports@adports.ae

@@ -1,0 +1,55 @@
+# Finance rulebook for the dispute agent.
+# OWNER: Finance. Values below are DRAFTS from the HLD - Finance to confirm.
+# Changes here take effect on the next agent restart; no code release needed.
+
+required_fields:
+  - ucid
+  - invoice_number
+  - disputed_amount
+  - reason
+
+# Words that indicate the email is a transaction dispute (case-insensitive)
+dispute_keywords:
+  - dispute
+  - disputed
+  - incorrect charge
+  - wrong charge
+  - overcharge
+  - overcharged
+  - charged twice
+  - duplicate charge
+  - credit note
+  - refund
+  - wrong invoice
+  - incorrect invoice
+  - not received
+  - tariff
+
+thresholds:
+  classification: 0.85   # below -> human review queue
+  extraction: 0.90       # any required field below -> human review queue
+
+# Disputes above this amount never go straight through, even in autonomous mode
+autonomous_amount_cap_aed: 50000
+
+# Customer wording -> Fusion dispute reason code (codes to be confirmed by ERP team)
+reason_codes:
+  overcharge: PRICING
+  incorrect charge: PRICING
+  wrong charge: PRICING
+  tariff: PRICING
+  charged twice: DUPLICATE
+  duplicate charge: DUPLICATE
+  service not received: SERVICE_NOT_RENDERED
+  not received: SERVICE_NOT_RENDERED
+  wrong quantity: QUANTITY
+  incorrect quantity: QUANTITY
+  wrong customer: WRONG_CUSTOMER
+  tax: TAX
+
+reminders:
+  days_between: 3   # days between reminders to the customer
+  max: 2            # close the record after this many unanswered reminders
+
+# Sender domain must match one of the customer's registered contact domains
+check_sender_domain: true

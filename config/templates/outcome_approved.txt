@@ -1,0 +1,12 @@
+Subject: RE: $subject - dispute $dispute_ref approved
+
+Dear Customer,
+
+Your dispute $dispute_ref on invoice $invoice_number has been approved.
+
+  Outcome: $outcome_detail
+  Credit note: $credit_memo_number
+
+Kind regards,
+AD Ports Finance - Disputes
+Dispute.Ports@adports.ae

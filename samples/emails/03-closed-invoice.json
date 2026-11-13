@@ -1,0 +1,9 @@
+{
+  "message_id": "msg-03-closed-invoice",
+  "conversation_id": "conv-003",
+  "sender": "accounts@gulfstarshipping.ae",
+  "subject": "Dispute on INV-2026-104871",
+  "body": "Hi,\nUCID UC100245. We dispute invoice INV-2026-104871 - incorrect charge for berth hire.\nDisputed amount AED 2,100.\nReason: incorrect charge.\nThanks",
+  "received_at": "2026-10-05T08:16:00+04:00",
+  "attachments": []
+}

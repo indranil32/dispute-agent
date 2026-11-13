@@ -1,0 +1,13 @@
+Subject: RE: $subject - reminder: details still needed
+
+Dear Customer,
+
+We are still waiting for the following details to register your dispute:
+
+$missing_list
+
+Please reply to this email with the details above.
+
+Kind regards,
+AD Ports Finance - Disputes
+Dispute.Ports@adports.ae

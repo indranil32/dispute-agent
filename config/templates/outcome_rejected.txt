@@ -1,0 +1,13 @@
+Subject: RE: $subject - dispute $dispute_ref outcome
+
+Dear Customer,
+
+Your dispute $dispute_ref on invoice $invoice_number has been reviewed and could not be approved.
+
+  Reason: $outcome_detail
+
+If you have further information, please reply to this email quoting the dispute reference.
+
+Kind regards,
+AD Ports Finance - Disputes
+Dispute.Ports@adports.ae

@@ -1,0 +1,9 @@
+{
+  "message_id": "msg-05-not-a-dispute",
+  "conversation_id": "conv-005",
+  "sender": "ops@desertline.com",
+  "subject": "Berth schedule next week",
+  "body": "Hello, could you share the berth schedule for next week at Zayed Port? Thanks.",
+  "received_at": "2026-10-05T08:22:00+04:00",
+  "attachments": []
+}

@@ -1,0 +1,9 @@
+{
+  "message_id": "msg-04-ucid-mismatch",
+  "conversation_id": "conv-004",
+  "sender": "billing@desertline.com",
+  "subject": "Invoice dispute INV-2026-105502",
+  "body": "Dear team,\nUCID: UC999999\nInvoice number: INV-2026-105502\nWe dispute AED 12,000 on this invoice - tariff applied is wrong (overcharge).\nBest regards, Desert Line Logistics",
+  "received_at": "2026-10-05T08:19:00+04:00",
+  "attachments": []
+}

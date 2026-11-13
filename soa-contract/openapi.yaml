@@ -1,0 +1,136 @@
+openapi: 3.0.3
+info:
+  title: Dispute Agent - SOA services
+  version: 0.1.0
+  description: |
+    Canonical services the dispute AI agent calls. To be implemented on Oracle SOA Suite / OIC by the
+    integration team. SOA owns the Fusion credentials and maps these calls to Oracle Fusion Cloud Financials,
+    e.g. the Receivables Disputes resource (POST /fscmRestApi/resources/11.13.18.05/receivablesDisputes).
+
+    OPEN ITEM (ERP team): confirm receivablesDisputes is the right Fusion object for the Advanced
+    Collections set-up and that creating it starts the current dispute approval workflow.
+
+    Auth: OAuth 2.0 client credentials (agent's service principal). Private network only.
+    Errors: business rejections return 4xx with {code, message}; technical failures return 5xx.
+servers:
+  - url: https://soa.internal.example/dispute-agent/v1
+security:
+  - oauth2: []
+paths:
+  /invoices/{invoiceNumber}:
+    get:
+      summary: Get invoice (read-only lookup in Fusion Receivables)
+      operationId: getInvoice
+      parameters:
+        - { name: invoiceNumber, in: path, required: true, schema: { type: string } }
+      responses:
+        "200": { description: Invoice found, content: { application/json: { schema: { $ref: "#/components/schemas/Invoice" } } } }
+        "404": { description: Invoice not found, content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } } }
+  /invoices/{invoiceNumber}/disputes:
+    get:
+      summary: List disputes on an invoice (used for duplicate checks)
+      operationId: listInvoiceDisputes
+      parameters:
+        - { name: invoiceNumber, in: path, required: true, schema: { type: string } }
+        - { name: status, in: query, required: false, schema: { type: string, enum: [OPEN, ALL], default: OPEN } }
+      responses:
+        "200":
+          description: Disputes on the invoice
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items: { type: array, items: { $ref: "#/components/schemas/OpenDispute" } }
+  /disputes:
+    post:
+      summary: Create dispute on an invoice in Fusion (starts the approval workflow)
+      operationId: createDispute
+      parameters:
+        - name: Idempotency-Key
+          in: header
+          required: true
+          description: Unique per agent dispute record. A repeat with the same key returns the original result and creates nothing.
+          schema: { type: string }
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/CreateDisputeRequest" } } }
+      responses:
+        "201": { description: Created, content: { application/json: { schema: { $ref: "#/components/schemas/CreateDisputeResult" } } } }
+        "200": { description: Idempotent replay, content: { application/json: { schema: { $ref: "#/components/schemas/CreateDisputeResult" } } } }
+        "409": { description: "Business rejection (INVOICE_CLOSED, DUPLICATE_DISPUTE)", content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } } }
+        "422": { description: "Validation failure (AMOUNT_EXCEEDS_BALANCE, INVALID_REASON_CODE, INVOICE_NOT_FOUND)", content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } } }
+  /disputes/{disputeId}:
+    get:
+      summary: Get dispute status and workflow outcome
+      operationId: getDispute
+      parameters:
+        - { name: disputeId, in: path, required: true, schema: { type: string } }
+      responses:
+        "200": { description: Dispute, content: { application/json: { schema: { $ref: "#/components/schemas/DisputeStatus" } } } }
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://login.microsoftonline.com/<tenant>/oauth2/v2.0/token
+          scopes: {}
+  schemas:
+    Invoice:
+      type: object
+      required: [invoice_number, customer_ucid, customer_name, customer_account, bill_to_site, business_unit, currency, amount, balance_due, status]
+      properties:
+        invoice_number: { type: string }
+        customer_ucid: { type: string }
+        customer_name: { type: string }
+        customer_account: { type: string }
+        bill_to_site: { type: string }
+        business_unit: { type: string, description: Routes approval to the right cluster Finance team }
+        currency: { type: string, example: AED }
+        amount: { type: number }
+        balance_due: { type: number }
+        status: { type: string, enum: [OPEN, CLOSED] }
+        contact_domains: { type: array, items: { type: string }, description: Email domains of the customer's registered contacts }
+    OpenDispute:
+      type: object
+      properties:
+        dispute_id: { type: string }
+        amount: { type: number }
+        status: { type: string }
+    CreateDisputeRequest:
+      type: object
+      required: [request_id, invoice_number, ucid, customer_account, bill_to_site, business_unit, amount, currency, reason_code, description, contact_email]
+      properties:
+        request_id: { type: string }
+        invoice_number: { type: string }
+        ucid: { type: string }
+        customer_account: { type: string }
+        bill_to_site: { type: string }
+        business_unit: { type: string }
+        amount: { type: number }
+        currency: { type: string }
+        reason_code: { type: string, description: Fusion dispute reason code (mapping owned by Finance) }
+        description: { type: string, maxLength: 2000 }
+        contact_email: { type: string }
+        attachment_names: { type: array, items: { type: string } }
+        source: { type: string, default: DISPUTE_AI_AGENT }
+    CreateDisputeResult:
+      type: object
+      properties:
+        dispute_id: { type: string, description: Fusion dispute / credit memo request id }
+        dispute_number: { type: string }
+        status: { type: string, example: PENDING_APPROVAL }
+    DisputeStatus:
+      type: object
+      properties:
+        dispute_id: { type: string }
+        status: { type: string, enum: [PENDING_APPROVAL, APPROVED, REJECTED] }
+        outcome_detail: { type: string, nullable: true }
+        credit_memo_number: { type: string, nullable: true }
+    Error:
+      type: object
+      required: [code, message]
+      properties:
+        code: { type: string }
+        message: { type: string }

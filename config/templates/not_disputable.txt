@@ -1,0 +1,13 @@
+Subject: RE: $subject - invoice $invoice_number cannot be disputed
+
+Dear Customer,
+
+We were unable to register a dispute on invoice $invoice_number:
+
+  $why
+
+If you believe this is incorrect, please reply to this email with supporting details.
+
+Kind regards,
+AD Ports Finance - Disputes
+Dispute.Ports@adports.ae

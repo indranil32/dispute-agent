@@ -1,0 +1,9 @@
+{
+  "message_id": "msg-08-high-value",
+  "conversation_id": "conv-008",
+  "sender": "billing@desertline.com",
+  "subject": "Dispute INV-2026-105502 - tariff",
+  "body": "Dear AD Ports Finance,\nUCID: UC200981\nInvoice number: INV-2026-105502\nDisputed amount: AED 75,000.00\nReason: tariff overcharge - the 2025 rate card was applied instead of the contracted 2026 rate.\nRegards, Desert Line Logistics",
+  "received_at": "2026-10-05T08:31:00+04:00",
+  "attachments": []
+}

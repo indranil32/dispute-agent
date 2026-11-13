@@ -1,0 +1,15 @@
+Subject: RE: $subject - more details needed for your dispute
+
+Dear Customer,
+
+Thank you for contacting AD Ports Finance about a disputed transaction.
+
+To register your dispute we need the following details, which were missing or could not be matched in our records:
+
+$missing_list
+
+Please reply to this email with the details above. Your dispute will be registered as soon as we receive them.
+
+Kind regards,
+AD Ports Finance - Disputes
+Dispute.Ports@adports.ae

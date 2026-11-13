@@ -1,0 +1,9 @@
+{
+  "message_id": "msg-02-missing-invoice",
+  "conversation_id": "conv-002",
+  "sender": "finance@arabianreefer.com",
+  "subject": "Charged twice for reefer plug-in",
+  "body": "Hello,\n\nWe have been charged twice for reefer plug-in services in August. Duplicate charge of AED 4,900.\nUCID: UC300410\n\nPlease correct.\nArabian Reefer Lines",
+  "received_at": "2026-10-05T08:13:00+04:00",
+  "attachments": []
+}
